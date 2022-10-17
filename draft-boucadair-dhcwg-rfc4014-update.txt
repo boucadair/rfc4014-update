@@ -1,0 +1,336 @@
+
+
+
+
+Network Working Group                                       M. Boucadair
+Internet-Draft                                                    Orange
+Updates: 4014 (if approved)                              17 October 2022
+Intended status: Standards Track                                        
+Expires: 20 April 2023
+
+
+    RADIUS Attributes Permitted in RADIUS Attributes DHCP Suboption
+                draft-boucadair-dhcwg-rfc4014-update-00
+
+Abstract
+
+   The RADIUS Attributes suboption enables a network element to pass
+   identification and authorization attributes received during RADIUS
+   authentication to a DHCP server.  However, RFC 4014 defines a frozen
+   list of RADIUS attributes that can be included in such a suboption.
+   This document updates RFC 4014 by relaxing that constraint and
+   allowing to tag additional RADIUS Attributes as permitted in the
+   RADIUS Attributes DHCP suboption.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 20 April 2023.
+
+Copyright Notice
+
+   Copyright (c) 2022 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+
+
+
+
+
+
+
+
+
+Boucadair                 Expires 20 April 2023                 [Page 1]
+
+Internet-Draft      RADIUS Attributes DHCP Suboption        October 2022
+
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
+   3.  Updates to RFC4014  . . . . . . . . . . . . . . . . . . . . .   3
+     3.1.  Section 3 of RFC4014  . . . . . . . . . . . . . . . . . .   3
+     3.2.  Section 4 of RFC4014  . . . . . . . . . . . . . . . . . .   3
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   5
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   6
+
+1.  Introduction
+
+   The RADIUS Attributes suboption ([RFC4014]) enables a network element
+   to pass identification and authorization attributes received during
+   RADIUS authentication [RFC2865] to a DHCP server [RFC2131].  However,
+   [RFC4014] defines a frozen set of RADIUS attributes that can be
+   included in such a suboption.  Such limitation is suboptimal in
+   context where new services are deployed (e.g., support of encrypted
+   DNS [I-D.ietf-add-dnr]).
+
+   Section 3 updates RFC 4014 by relaxing that constraint and allowing
+   to tag additional RADIUS Attributes as permitted in the RADIUS
+   Attributes DHCP suboption.  To that aim, a new IANA registry is
+   created to maintain the set of permitted attributes in the RADIUS
+   Attributes DHCP suboption.  The maintenance of such a registry is
+   similar to the one in [RFC7037].
+
+   [I-D.ietf-opsawg-add-encrypted-dns] defines the DHCPv4-Options RADIUS
+   attribute that can be used by a DHCP relay agent, collocated with a
+   RADIUS client, to pass attributes obtained from a RADIUS server to a
+   DHCP server.  The DHCPv4-Options RADIUS attribute can, for example,
+   include a list of encrypted DNS resolvers.
+
+
+
+
+
+Boucadair                 Expires 20 April 2023                 [Page 2]
+
+Internet-Draft      RADIUS Attributes DHCP Suboption        October 2022
+
+
+2.  Terminology
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Updates to RFC4014
+
+
+3.1.  Section 3 of RFC4014
+
+   This document updates Section 3 of [RFC4014] as follows:
+
+   OLD:
+      To avoid dependencies between the address allocation and other
+      state information between the RADIUS server and the DHCP server,
+      the DHCP relay agent SHOULD include only the attributes in the
+      table below in an instance of the RADIUS Attributes suboption.
+      The table, based on the analysis in RFC 3580 [8], lists attributes
+      that MAY be included:
+
+                 #   Attribute
+               ---   ---------
+                 1   User-Name (RFC 2865 [3])
+                 6   Service-Type (RFC 2865)
+                26   Vendor-Specific (RFC 2865)
+                27   Session-Timeout (RFC 2865)
+                88   Framed-Pool (RFC 2869)
+               100   Framed-IPv6-Pool (RFC 3162 [7])
+
+   NEW:
+      To avoid dependencies between the address allocation and other
+      state information between the RADIUS server and the DHCP server,
+      the DHCP relay agent SHOULD include only the attributes in the
+      IANA-maintained registry (Section 4) in an instance of the RADIUS
+      Attributes suboption.
+
+3.2.  Section 4 of RFC4014
+
+   This document updates Section 4 of [RFC4014] as follows:
+
+   OLD:
+      If the relay agent relays RADIUS attributes not included in the
+      table in Section 4, the DHCP server SHOULD ignore them.
+
+
+
+
+
+Boucadair                 Expires 20 April 2023                 [Page 3]
+
+Internet-Draft      RADIUS Attributes DHCP Suboption        October 2022
+
+
+   NEW:
+      If the relay agent relays RADIUS attributes not included in the
+      IANA-maintained registry (Section 4), the DHCP server SHOULD
+      ignore them.
+
+4.  IANA Considerations
+
+   IANA is requested to create a new sub-registry entitled "RADIUS
+   Attributes Permitted in RADIUS Attributes Sub-option" in the "Dynamic
+   Host Configuration Protocol (DHCP) and Bootstrap Protocol (BOOTP)
+   Parameters" registry [BOOTP].
+
+   The allocation policy of this new sub-registry is Expert Review per
+   [RFC8126].  Designated experts should carefully consider the security
+   implications of allowing the relay agent to include new RADIUS
+   attributes to this registry.
+
+   The initial content of this sub-registry is listed in Table 1.
+
+             +===========+==================+===============+
+             | Type Code | Attribute        | Reference     |
+             +===========+==================+===============+
+             | 1         | User-Name        | RFC 2865      |
+             +-----------+------------------+---------------+
+             | 6         | Service-Type     | RFC 2865      |
+             +-----------+------------------+---------------+
+             | 26        | Vendor-Specific  | RFC 2865      |
+             +-----------+------------------+---------------+
+             | 27        | Session-Timeout  | RFC 2865      |
+             +-----------+------------------+---------------+
+             | 88        | Framed-Pool      | RFC 2869      |
+             +-----------+------------------+---------------+
+             | 100       | Framed-IPv6-Pool | RFC 3162      |
+             +-----------+------------------+---------------+
+             | 245.TBA1  | DHCPv4-Options   | This-Document |
+             +-----------+------------------+---------------+
+
+                 Table 1: RADIUS Attributes Permitted in
+                       RADIUS Attributes Suboption
+
+5.  Security Considerations
+
+   This document does not add new security considerations to those
+   already discussed in Section 7 of [RFC4014].
+
+
+
+
+
+
+
+Boucadair                 Expires 20 April 2023                 [Page 4]
+
+Internet-Draft      RADIUS Attributes DHCP Suboption        October 2022
+
+
+6.  Acknowledgements
+
+   To be completed.
+
+7.  References
+
+7.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC2131]  Droms, R., "Dynamic Host Configuration Protocol",
+              RFC 2131, DOI 10.17487/RFC2131, March 1997,
+              <https://www.rfc-editor.org/info/rfc2131>.
+
+   [RFC2865]  Rigney, C., Willens, S., Rubens, A., and W. Simpson,
+              "Remote Authentication Dial In User Service (RADIUS)",
+              RFC 2865, DOI 10.17487/RFC2865, June 2000,
+              <https://www.rfc-editor.org/info/rfc2865>.
+
+   [RFC4014]  Droms, R. and J. Schnizlein, "Remote Authentication Dial-
+              In User Service (RADIUS) Attributes Suboption for the
+              Dynamic Host Configuration Protocol (DHCP) Relay Agent
+              Information Option", RFC 4014, DOI 10.17487/RFC4014,
+              February 2005, <https://www.rfc-editor.org/info/rfc4014>.
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/info/rfc8126>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+7.2.  Informative References
+
+   [BOOTP]    IANA, "Dynamic Host Configuration Protocol (DHCP) and
+              Bootstrap Protocol (BOOTP) Parameters",
+              <https://www.iana.org/assignments/bootp-dhcp-parameters/
+              bootp-dhcp-parameters.xhtml>.
+
+   [I-D.ietf-add-dnr]
+              Boucadair, M., Reddy, T., Wing, D., Cook, N., and T.
+              Jensen, "DHCP and Router Advertisement Options for the
+              Discovery of Network-designated Resolvers (DNR)", Work in
+
+
+
+Boucadair                 Expires 20 April 2023                 [Page 5]
+
+Internet-Draft      RADIUS Attributes DHCP Suboption        October 2022
+
+
+              Progress, Internet-Draft, draft-ietf-add-dnr-13, 13 August
+              2022, <https://www.ietf.org/archive/id/draft-ietf-add-dnr-
+              13.txt>.
+
+   [I-D.ietf-opsawg-add-encrypted-dns]
+              Boucadair, M. and T. Reddy.K, "RADIUS Extensions for
+              Encrypted DNS", Work in Progress, Internet-Draft, draft-
+              ietf-opsawg-add-encrypted-dns-03, 6 October 2022,
+              <https://www.ietf.org/archive/id/draft-ietf-opsawg-add-
+              encrypted-dns-03.txt>.
+
+   [RFC7037]  Yeh, L. and M. Boucadair, "RADIUS Option for the DHCPv6
+              Relay Agent", RFC 7037, DOI 10.17487/RFC7037, October
+              2013, <https://www.rfc-editor.org/info/rfc7037>.
+
+Author's Address
+
+   Mohamed Boucadair
+   Orange
+   35000 Rennes
+   France
+   Email: mohamed.boucadair@orange.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair                 Expires 20 April 2023                 [Page 6]

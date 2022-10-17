@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc category="std" docName="draft-boucadair-dhcwg-rfc4014-update-00"
+     ipr="trust200902" updates="4014">
+  <front>
+    <title abbrev="RADIUS Attributes DHCP Suboption">RADIUS Attributes
+    Permitted in RADIUS Attributes DHCP Suboption</title>
+
+    <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
+      <organization>Orange</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <city>Rennes</city>
+
+          <region></region>
+
+          <code>35000</code>
+
+          <country>France</country>
+        </postal>
+
+        <email>mohamed.boucadair@orange.com</email>
+      </address>
+    </author>
+
+    <date />
+
+    <abstract>
+      <t>The RADIUS Attributes suboption enables a network element to pass
+      identification and authorization attributes received during RADIUS
+      authentication to a DHCP server. However, RFC 4014 defines a frozen list
+      of RADIUS attributes that can be included in such a suboption. This
+      document updates RFC 4014 by relaxing that constraint and allowing to
+      tag additional RADIUS Attributes as permitted in the RADIUS Attributes
+      DHCP suboption.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>The RADIUS Attributes suboption (<xref target="RFC4014"></xref>)
+      enables a network element to pass identification and authorization
+      attributes received during RADIUS authentication <xref
+      target="RFC2865"></xref> to a DHCP server <xref
+      target="RFC2131"></xref>. However, <xref target="RFC4014"></xref>
+      defines a frozen set of RADIUS attributes that can be included in such a
+      suboption. Such limitation is suboptimal in context where new services
+      are deployed (e.g., support of encrypted DNS <xref
+      target="I-D.ietf-add-dnr"></xref>).</t>
+
+      <t><xref target="update"></xref> updates RFC 4014 by relaxing that
+      constraint and allowing to tag additional RADIUS Attributes as permitted
+      in the RADIUS Attributes DHCP suboption. To that aim, a new IANA
+      registry is created to maintain the set of permitted attributes in the
+      RADIUS Attributes DHCP suboption. The maintenance of such a registry is
+      similar to the one in <xref target="RFC7037"></xref>. </t>
+
+      <t><xref target="I-D.ietf-opsawg-add-encrypted-dns"></xref> defines the
+      DHCPv4-Options RADIUS attribute that can be used by a DHCP relay agent,
+      collocated with a RADIUS client, to pass attributes obtained from a
+      RADIUS server to a DHCP server. The DHCPv4-Options RADIUS attribute can,
+      for example, include a list of encrypted DNS resolvers.</t>
+    </section>
+
+    <section anchor="notation" title="Terminology">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in BCP 14
+      <xref target="RFC2119"></xref> <xref target="RFC8174"></xref> when, and
+      only when, they appear in all capitals, as shown here.</t>
+    </section>
+
+    <section anchor="update" title="Updates to RFC4014">
+      <t></t>
+
+      <section anchor="update1" title="Section 3 of RFC4014">
+        <t>This document updates Section 3 of <xref target="RFC4014"></xref>
+        as follows:<list style="hanging">
+            <t hangText="OLD:"><vspace blankLines="1" />To avoid dependencies
+            between the address allocation and other state information between
+            the RADIUS server and the DHCP server, the DHCP relay agent SHOULD
+            include only the attributes in the table below in an instance of
+            the RADIUS Attributes suboption. The table, based on the analysis
+            in RFC 3580 [8], lists attributes that MAY be included:<vspace
+            blankLines="1" /><figure>
+                <artwork><![CDATA[           #   Attribute
+         ---   ---------
+           1   User-Name (RFC 2865 [3])
+           6   Service-Type (RFC 2865)
+          26   Vendor-Specific (RFC 2865)
+          27   Session-Timeout (RFC 2865)
+          88   Framed-Pool (RFC 2869)
+         100   Framed-IPv6-Pool (RFC 3162 [7])
+]]></artwork>
+              </figure></t>
+
+            <t hangText="NEW:"><vspace blankLines="1" />To avoid dependencies
+            between the address allocation and other state information between
+            the RADIUS server and the DHCP server, the DHCP relay agent SHOULD
+            include only the attributes in the IANA-maintained registry (<xref
+            target="IANA"></xref>) in an instance of the RADIUS Attributes
+            suboption.</t>
+          </list></t>
+      </section>
+
+      <section anchor="update2" title="Section 4 of RFC4014">
+        <t>This document updates Section 4 of <xref target="RFC4014"></xref>
+        as follows:<list style="hanging">
+            <t hangText="OLD:"><vspace blankLines="1" />If the relay agent
+            relays RADIUS attributes not included in the table in Section 4,
+            the DHCP server SHOULD ignore them.</t>
+
+            <t hangText="NEW:"><vspace blankLines="1" />If the relay agent
+            relays RADIUS attributes not included in the IANA-maintained
+            registry (<xref target="IANA"></xref>), the DHCP server SHOULD
+            ignore them.</t>
+          </list></t>
+      </section>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>IANA is requested to create a new sub-registry entitled "RADIUS
+      Attributes Permitted in RADIUS Attributes Sub-option" in the "Dynamic
+      Host Configuration Protocol (DHCP) and Bootstrap Protocol (BOOTP)
+      Parameters" registry <xref target="BOOTP"></xref>.</t>
+
+      <t>The allocation policy of this new sub-registry is Expert Review per
+      <xref target="RFC8126"></xref>. Designated experts should carefully
+      consider the security implications of allowing the relay agent to
+      include new RADIUS attributes to this registry.</t>
+
+      <t>The initial content of this sub-registry is listed in <xref
+      target="rd"></xref>.</t>
+
+      <texttable anchor="rd" style="headers"
+                 title="RADIUS Attributes Permitted in RADIUS Attributes Suboption">
+        <ttcol>Type Code</ttcol>
+
+        <ttcol>Attribute</ttcol>
+
+        <ttcol>Reference</ttcol>
+
+        <c>1</c>
+
+        <c>User-Name</c>
+
+        <c>RFC 2865</c>
+
+        <c>6</c>
+
+        <c>Service-Type</c>
+
+        <c>RFC 2865</c>
+
+        <c>26</c>
+
+        <c>Vendor-Specific</c>
+
+        <c>RFC 2865</c>
+
+        <c>27</c>
+
+        <c>Session-Timeout</c>
+
+        <c>RFC 2865</c>
+
+        <c>88</c>
+
+        <c>Framed-Pool</c>
+
+        <c>RFC 2869</c>
+
+        <c>100</c>
+
+        <c>Framed-IPv6-Pool</c>
+
+        <c>RFC 3162</c>
+
+        <c>245.TBA1</c>
+
+        <c>DHCPv4-Options</c>
+
+        <c>This-Document</c>
+      </texttable>
+    </section>
+
+    <section anchor="security" title="Security Considerations">
+      <t>This document does not add new security considerations to those
+      already discussed in Section 7 of <xref target="RFC4014"></xref>.</t>
+    </section>
+
+    <section anchor="ack" title="Acknowledgements">
+      <t>To be completed.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include='reference.RFC.2119'?>
+
+      <?rfc include='reference.RFC.8174'?>
+
+      <?rfc include='reference.RFC.4014'?>
+
+      <?rfc include='reference.RFC.8126'?>
+
+      <?rfc include='reference.RFC.2865'?>
+
+      <?rfc include='reference.RFC.2131'?>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include='reference.RFC.7037'?>
+
+      <?rfc include='reference.I-D.ietf-add-dnr'?>
+
+      <?rfc include='reference.I-D.ietf-opsawg-add-encrypted-dns'?>
+
+      <reference anchor="BOOTP"
+                 target="https://www.iana.org/assignments/bootp-dhcp-parameters/bootp-dhcp-parameters.xhtml">
+        <front>
+          <title>Dynamic Host Configuration Protocol (DHCP) and Bootstrap
+          Protocol (BOOTP) Parameters</title>
+
+          <author>
+            <organization>IANA</organization>
+          </author>
+
+          <date />
+        </front>
+      </reference>
+    </references>
+  </back>
+</rfc>
