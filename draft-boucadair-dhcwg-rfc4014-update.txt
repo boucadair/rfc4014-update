@@ -14,10 +14,12 @@ Expires: 20 April 2023
 
 Abstract
 
-   The RADIUS Attributes suboption enables a network element to pass
-   identification and authorization attributes received during RADIUS
-   authentication to a DHCP server.  However, RFC 4014 defines a frozen
-   list of RADIUS attributes that can be included in such a suboption.
+   The RADIUS Attributes suboption, specified in RFC 4014, enables a
+   DHCP relay agent to pass identification and authorization information
+   received during RADIUS authentication to a DHCP server.  However, RFC
+   4014 defines a frozen list of RADIUS attributes that can be included
+   in such a suboption.
+
    This document updates RFC 4014 by relaxing that constraint and
    allowing to tag additional RADIUS Attributes as permitted in the
    RADIUS Attributes DHCP suboption.
@@ -44,12 +46,10 @@ Copyright Notice
    Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-
-
-
-
-
-
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
 
 
 
@@ -58,10 +58,6 @@ Boucadair                 Expires 20 April 2023                 [Page 1]
 Internet-Draft      RADIUS Attributes DHCP Suboption        October 2022
 
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents (https://trustee.ietf.org/
-   license-info) in effect on the date of publication of this document.
-   Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
    extracted from this document must include Revised BSD License text as
    described in Section 4.e of the Trust Legal Provisions and are
@@ -88,8 +84,8 @@ Table of Contents
    to pass identification and authorization attributes received during
    RADIUS authentication [RFC2865] to a DHCP server [RFC2131].  However,
    [RFC4014] defines a frozen set of RADIUS attributes that can be
-   included in such a suboption.  Such limitation is suboptimal in
-   context where new services are deployed (e.g., support of encrypted
+   included in such a suboption.  This limitation is suboptimal in
+   contexts where new services are deployed (e.g., support of encrypted
    DNS [I-D.ietf-add-dnr]).
 
    Section 3 updates RFC 4014 by relaxing that constraint and allowing
@@ -104,6 +100,10 @@ Table of Contents
    RADIUS client, to pass attributes obtained from a RADIUS server to a
    DHCP server.  The DHCPv4-Options RADIUS attribute can, for example,
    include a list of encrypted DNS resolvers.
+
+
+
+
 
 
 
