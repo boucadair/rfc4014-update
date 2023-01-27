@@ -12,3 +12,5 @@ Abstract
    This document updates RFC 4014 by relaxing that constraint and
    allowing to tag additional RADIUS Attributes as permitted in the
    RADIUS Attributes DHCP suboption.
+
+This draft is merged into https://datatracker.ietf.org/doc/draft-ietf-opsawg-add-encrypted-dns/ 
